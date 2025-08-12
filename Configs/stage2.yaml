@@ -1,0 +1,68 @@
+data:
+    src: "gloss"    
+    trg: "skels"   
+    files: "files"    
+
+    train: "./Data/P2014T_Ben/train"
+    dev: "./Data/P2014T_Ben/dev"
+    test: "./Data/P2014T_Ben/test"
+
+    max_sent_length: 300 
+    skip_frames: 1  
+    src_vocab: "./Configs/src_vocab.txt"
+
+training:
+    random_seed: 27  
+    optimizer: "adam"   
+    learning_rate: 0.001   
+    learning_rate_min: 0.0002 
+    weight_decay: 0.0   
+    clip_grad_norm: 5.0  
+    batch_size: 12    
+    scheduling: "plateau"   
+    patience: 7  
+    decrease_factor: 0.7  
+    early_stopping_metric: "dtw" 
+    epochs: 20000  
+    validation_freq: 1 
+    logging_freq: 250  
+    eval_metric: "dtw"  
+    model_stage1_dir: "./Models/Stage1" 
+    model_stage2_dir: "./Models/Stage2" 
+    overwrite: False 
+    continue: True  
+    shuffle: True  
+    use_cuda: True  
+    max_output_length: 300 
+    keep_last_ckpts: 1 
+    mask_ratio: 0.3
+    observation: 20
+    prediction: 10
+    loss: "L1" 
+
+model:
+    initializer: "xavier" 
+    bias_initializer: "zeros"  
+    embed_initializer: "xavier"
+    trg_size: 150 
+    PoseVAE:  
+        num_layers: 2 
+        num_heads: 4  
+        embedding_dim: 512  
+        dropout: 0.1 
+        hidden_size: 512 
+        ff_size: 2048 
+    Diffusion:
+        timesteps: 1000
+        ddim_timesteps: 5
+        scale: 1.0
+        Denoiser:
+            num_layers: 2
+            num_heads: 4
+            embedding_dim: 512
+            dropout: 0.1
+            hidden_size: 512
+            ff_size: 2048
+
+
+
